@@ -1,0 +1,25 @@
+<!-- templates/services.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hotel Services</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h2>Our Exclusive Services</h2>
+    <div class="service-card-container">
+        {% for service in services %}
+        <div class="product-card">
+            <img src="{{ service.image_url }}" alt="{{ service.name }}" class="product-img">
+            <div class="product-info">
+                <h3>{{ service.name }}</h3>
+                <p>Price: ₹{{ service.price }}</p>
+                <button class="add-to-cart" data-service-id="{{ service.id }}">Add to Cart</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

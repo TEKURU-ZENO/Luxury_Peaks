@@ -1,0 +1,35 @@
+<!-- templates/restaurant.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Restaurant Menu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h2>Restaurant Menu</h2>
+    <div class="cuisine-container">
+        <!-- Collapsible sections for each cuisine -->
+        {% for cuisine, dishes in menu.items() %}
+        <button class="collapsible">{{ cuisine }}</button>
+        <div class="content">
+            <div class="product-card-container">
+                {% for dish in dishes %}
+                <div class="product-card">
+                    <img src="{{ dish.image_url }}" alt="{{ dish.name }}" class="product-img">
+                    <div class="product-info">
+                        <h3>{{ dish.name }}</h3>
+                        <p>Price: ₹{{ dish.price }}</p>
+                        <label for="quantity-{{ dish.id }}">Quantity:</label>
+                        <input type="number" id="quantity-{{ dish.id }}" name="quantity" min="1" value="1">
+                        <button class="add-to-cart" data-dish-id="{{ dish.id }}">Add to Cart</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

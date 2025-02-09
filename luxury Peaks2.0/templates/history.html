@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Booking History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('{{ url_for("static", filename="images/background.jpg") }}') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ffda79;
+        }
+
+        h2 {
+            color: #ffe29a;
+        }
+
+        .booking-item, .order-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Booking History for {{ customer.name }}</h1>
+        
+        <form action="{{ url_for('customer_booking_history') }}" method="GET">
+            <div class="form-group">
+                <label for="customer-id">Customer ID:</label>
+                <input type="text" id="customer-id" name="customer_id" value="{{ customer.customer_id }}" required>
+            </div>
+            <button type="submit" class="btn">Get Booking History</button>
+        </form>
+        
+        <h2>Room Bookings</h2>
+        {% for booking in room_bookings %}
+            <div class="booking-item">
+                <p>Room Type: {{ booking.room_type }}</p>
+                <p>Days: {{ booking.num_days }}</p>
+                <p>Total: {{ booking.price_per_night * booking.num_days }} INR</p>
+            </div>
+        {% endfor %}
+        
+        <h2>Restaurant Orders</h2>
+        {% for order in restaurant_orders %}
+            <div class="order-item">
+                <p>Item: {{ order.item_name }}</p>
+                <p>Quantity: {{ order.quantity }}</p>
+                <p>Price: {{ order.total_price }} INR</p>
+            </div>
+        {% endfor %}
+
+        <h2>Store Orders</h2>
+        {% for order in store_orders %}
+            <div class="order-item">
+                <p>Item: {{ order.item_name }}</p>
+                <p>Quantity: {{ order.quantity }}</p>
+                <p>Price: {{ order.total_price }} INR</p>
+            </div>
+        {% endfor %}
+
+        <a href="{{ url_for('checkout', customer_id=customer.customer_id) }}" class="btn">Checkout</a>
+    </div>
+</body>
+</html>

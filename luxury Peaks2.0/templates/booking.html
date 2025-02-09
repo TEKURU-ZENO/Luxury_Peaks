@@ -1,0 +1,17 @@
+<!-- templates/booking.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Booking Services</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h2>Select a Booking Service</h2>
+    <div class="booking-options">
+        <a href="{{ url_for('room_booking') }}" class="booking-option">Room Booking</a>
+        <a href="{{ url_for('restaurant') }}" class="booking-option">Restaurant</a>
+        <a href="{{ url_for('services') }}" class="booking-option">Service Booking</a>
+        <a href="{{ url_for('store') }}" class="booking-option">Store</a>
+    </div>
+</body>
+</html>

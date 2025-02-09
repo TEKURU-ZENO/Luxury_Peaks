@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Customer - Luxury Peaks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('{{ url_for("static", filename="images/background.jpg") }}') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            color: #007bff;
+        }
+
+        .back-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+
+        main section {
+            margin-bottom: 20px;
+        }
+
+        .customer-form label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .customer-form input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .form-actions button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .update-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .update-btn:hover {
+            background-color: #218838;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Manage Customer Information</h1>
+            <a href="{{ url_for('admin_dashboard') }}" class="back-btn">Back to Dashboard</a>
+        </header>
+
+        <main>
+            <section>
+                <h2>Customer Details</h2>
+                <form action="{{ url_for('manage_customer', customer_id=customer.id) }}" method="POST" class="customer-form">
+                    <input type="hidden" name="action" value="update">
+                    
+                    <label for="customer-id">Customer ID:</label>
+                    <input type="text" id="customer-id" name="customer_id" value="{{ customer.customer_id }}" readonly>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ customer.email }}" required>
+
+                    <label for="contact-number">Contact Number:</label>
+                    <input type="text" id="contact-number" name="contact_number" value="{{ customer.contact_number }}" required>
+
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="{{ customer.name }}" required>
+
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" value="{{ customer.age }}" required>
+
+                    <label for="country">Country:</label>
+                    <input type="text" id="country" name="country" value="{{ customer.country }}" required>
+
+                    <div class="form-actions">
+                        <button type="submit" class="update-btn">Update</button>
+                        <button type="button" class="delete-btn" onclick="confirmDelete()">Delete</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function confirmDelete() {
+            if (confirm("Are you sure you want to delete this customer? This action cannot be undone.")) {
+                document.querySelector('input[name="action"]').value = 'delete';
+                document.querySelector('.customer-form').submit();
+            }
+        }
+    </script>
+</body>
+</html>
